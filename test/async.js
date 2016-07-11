@@ -147,5 +147,26 @@ describe('async', function () {
         });
       });
     });
+
+    describe('merge(from, to, message, options)', function () {
+      it('creates merge a branch', function (done) {
+        this.timeout(15000)
+        var from = {
+          user: 'github-basic-js-test',
+          repo: 'pull-request-test',
+          branch: branch
+        };
+        var to = {
+          user: 'github-basic-js-test',
+          repo: 'pull-request-test',
+          branch: 'master'
+        };
+        client.merge(from, to, function (err, res) {
+          if (err) return done(err);
+          ///repos/github-basic-js-test/pull-request-test/pulls/1
+          client.head('/repos/github-basic-js-test/pull-request-test/pulls/' + res.number, done);
+        });
+      });
+    });
   });
 });
